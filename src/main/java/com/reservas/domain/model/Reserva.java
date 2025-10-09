@@ -1,10 +1,10 @@
 package com.reservas.domain.model;
 
-import com.reservas.domain.model.Enum.EstadoReserva;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "reservas")
@@ -21,14 +21,15 @@ public class Reserva {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "habitacion_id")
-    private Habitacion habitacion;
-    @Column(name = "fecha_inicio")
-    private LocalDate fechaInicio;
-    @Column(name = "fecha_fin")
-    private LocalDate fechaFin;
-    @Column(name = "estado_reserva")
-    @Enumerated(EnumType.STRING)
-    private EstadoReserva estadoReserva;
+    @Column(name = "monto_total_reservas")
+    private double montoTotalReservas;
+
+    @OneToMany(mappedBy = "reserva", cascade = CascadeType.ALL)
+    @Builder.Default
+    private List<DetalleReserva> detalleReservas = new ArrayList<>();
+
+    public void addDetalleReserva(DetalleReserva detalleReserva) {
+        this.detalleReservas.add(detalleReserva);
+        detalleReserva.setReserva(this);
+    }
 }

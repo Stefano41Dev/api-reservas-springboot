@@ -19,12 +19,13 @@ public class Habitacion {
     @Column(name = "id_habitacion")
     private Integer idHabitacion;
     @Column(name = "tarifa_diaria")
-    private double taridaDiaria;
+    private Double tarifaDiaria;
     private String descripcion;
-    private int capacidad;
+    private Integer capacidad;
     @Enumerated(EnumType.STRING)
     @Column(name = "estado_habitacion")
     private EstadoHabitacion estadoHabitacion;
+    private Boolean activo;
     @OneToMany(mappedBy = "habitacion")
-    private List<Reserva> reservas;
+    private List<DetalleReserva> reservasHabitacion;
 }
