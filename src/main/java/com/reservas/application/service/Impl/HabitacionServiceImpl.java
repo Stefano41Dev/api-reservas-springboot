@@ -27,6 +27,12 @@ public class HabitacionServiceImpl implements HabitacionService {
     @Override
     @Transactional
     public HabitacionDtoResponse agregarHabitacion(HabitacionDtoRequest habitacionDto) {
+        if(habitacionDto.capacidad()<0){
+            throw new ErrorNegocio("La capacidad no puede ser 0", HttpStatus.BAD_REQUEST);
+        }
+        if(habitacionDto.tarifaDiaria()<20){
+            throw new ErrorNegocio("La tarifa no puede ser menor a 20 soles",HttpStatus.BAD_REQUEST);
+        }
         var habitacion = habitacionRepository.save(habitacionMapper.toEntity(habitacionDto));
         return habitacionMapper.toDto(habitacion);
     }
@@ -45,8 +51,17 @@ public class HabitacionServiceImpl implements HabitacionService {
     @Override
     @Transactional
     public HabitacionDtoResponse modificarHabitacion(HabitacionDtoRequest habitacionDto, Integer id) {
+
+        if(habitacionDto.capacidad()<0){
+            throw new ErrorNegocio("La capacidad no puede ser 0", HttpStatus.BAD_REQUEST);
+        }
+        if(habitacionDto.tarifaDiaria()<20){
+            throw new ErrorNegocio("La tarifa no puede ser menor a 20 soles",HttpStatus.BAD_REQUEST);
+        }
+
         var habitacionBuscada = habitacionRepository.findById(id)
                 .orElseThrow(()-> new ErrorNegocio("No se encontro la habitacion con id "+ id, HttpStatus.NOT_FOUND));
+
         habitacionBuscada =  habitacionMapper.toEntity(habitacionDto);
 
         return habitacionMapper.toDto(habitacionRepository.save(habitacionBuscada)) ;
