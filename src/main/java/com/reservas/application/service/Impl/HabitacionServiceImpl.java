@@ -23,6 +23,7 @@ public class HabitacionServiceImpl implements HabitacionService {
 
     private final HabitacionRepository habitacionRepository;
     private final HabitacionMapper habitacionMapper;
+
     @Override
     @Transactional
     public HabitacionDtoResponse agregarHabitacion(HabitacionDtoRequest habitacionDto) {
@@ -37,7 +38,7 @@ public class HabitacionServiceImpl implements HabitacionService {
 
     @Override
     public HabitacionDtoResponse obtenerHabitacion(Integer id) {
-        return habitacionMapper.toDto(habitacionRepository.findById(id)
+        return habitacionMapper.toDto(habitacionRepository.findByIdHabitacionAndActivoTrue(id)
                 .orElseThrow(()->  new ErrorNegocio("No se encontro la habitacion con id "+ id, HttpStatus.NOT_FOUND)));
     }
 
@@ -58,6 +59,18 @@ public class HabitacionServiceImpl implements HabitacionService {
                 .orElseThrow(()-> new ErrorNegocio("No se encontro la habitacion con id "+ id, HttpStatus.NOT_FOUND));
         habitacionBuscada.setEstadoHabitacion(EstadoHabitacion.valueOf(estadoHabitacionDto.estadoHabitacion().toUpperCase()));
         return habitacionMapper.toDto(habitacionRepository.save(habitacionBuscada));
+    }
+
+    @Override
+    public Page<HabitacionDtoResponse> obtenerHabitacionesEstadoHabitacion(Pageable pageable, String estadoHabitacion) {
+        Page<Habitacion> habitacionesSegunEstado;
+        try{
+            EstadoHabitacion estadoHabitacionEnum = EstadoHabitacion.valueOf(estadoHabitacion);
+            habitacionesSegunEstado = habitacionRepository.findAllByEstadoHabitacion(estadoHabitacionEnum,pageable);
+        }catch(IllegalArgumentException  ex){
+            throw new ErrorNegocio("El estado" + estadoHabitacion + " no es valido", HttpStatus.BAD_REQUEST);
+        }
+        return habitacionesSegunEstado.map(habitacionMapper::toDto);
     }
 
     @Override

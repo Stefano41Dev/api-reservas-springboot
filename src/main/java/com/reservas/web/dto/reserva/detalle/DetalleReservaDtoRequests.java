@@ -6,7 +6,7 @@ public record   DetalleReservaDtoRequests(
    //Long idReserva,
    Integer idHabitacion,
    LocalDate fechaInicio,
-   LocalDate fechaFin,
-   String estadoReserva
+   LocalDate fechaFin
+
 ) {
 }

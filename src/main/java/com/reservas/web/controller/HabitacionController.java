@@ -5,10 +5,8 @@ import com.reservas.web.dto.habitacion.HabitacionDtoEstadoHabitacionRequest;
 import com.reservas.web.dto.habitacion.HabitacionDtoRequest;
 import com.reservas.web.dto.habitacion.HabitacionDtoResponse;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/habitacion")
 public class HabitacionController {
     public final HabitacionService habitacionService;
-    @PostMapping("/agregar")
+    @PostMapping
     public ResponseEntity<HabitacionDtoResponse> agregarHabitacion(@RequestBody HabitacionDtoRequest habitacionDtoRequest) {
         HabitacionDtoResponse habitacionDtoResponse= habitacionService.agregarHabitacion(habitacionDtoRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(habitacionDtoResponse);
@@ -44,5 +42,13 @@ public class HabitacionController {
     public ResponseEntity<HabitacionDtoResponse> modificarEstadoHabitacion(@PathVariable Integer id, @RequestBody HabitacionDtoEstadoHabitacionRequest habitacionEstadoDtoRequest) {
         var habitacion = habitacionService.modificarEstadoHabitacion(id, habitacionEstadoDtoRequest);
         return  ResponseEntity.ok().body(habitacion);
+    }
+    @GetMapping("/{estadoHabitacion}")
+    public ResponseEntity<Page<HabitacionDtoResponse>> obtenerHabitacionesSegunEstado(
+            @PageableDefault Pageable pageable,
+            @PathVariable String estadoHabitacion
+    ){
+        var habitaciones = habitacionService.obtenerHabitacionesEstadoHabitacion(pageable, estadoHabitacion);
+        return ResponseEntity.ok().body(habitaciones);
     }
 }

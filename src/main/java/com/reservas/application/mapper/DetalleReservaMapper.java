@@ -30,7 +30,7 @@ public class DetalleReservaMapper {
                 .fechaInicio(detalleReserva.fechaInicio())
                 .fechaFin(detalleReserva.fechaFin())
                 .montoTotalHabitacion(0.0)
-                .estadoReserva(EstadoReserva.valueOf(detalleReserva.estadoReserva()))
+                .estadoReserva(EstadoReserva.PENDIENTE)
                 .build();
     }
 }

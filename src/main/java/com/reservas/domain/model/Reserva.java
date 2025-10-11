@@ -24,7 +24,9 @@ public class Reserva {
     @Column(name = "monto_total_reservas")
     private double montoTotalReservas;
 
-    @OneToMany(mappedBy = "reserva", cascade = CascadeType.ALL)
+    private Boolean activo;
+
+    @OneToMany(mappedBy = "reserva", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private List<DetalleReserva> detalleReservas = new ArrayList<>();
 

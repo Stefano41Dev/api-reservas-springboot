@@ -24,6 +24,7 @@ public class ReservaMapper {
         return Reserva.builder()
                 .usuario(usuario)
                 .montoTotalReservas(montoTotalReservas)
+                .activo(true)
                 .build();
     }
 }

@@ -12,6 +12,8 @@ public interface HabitacionService{
     HabitacionDtoResponse obtenerHabitacion(Integer id);
     HabitacionDtoResponse modificarHabitacion(HabitacionDtoRequest habitacionDto,Integer id);
     HabitacionDtoResponse modificarEstadoHabitacion(Integer id, HabitacionDtoEstadoHabitacionRequest estadoHabitacionDto);
+    Page<HabitacionDtoResponse> obtenerHabitacionesEstadoHabitacion(Pageable pageable,String estadoHabitacion);
     void eliminarHabitacion(Integer id);
+
     //ToDo:Declarar mas metodos en habitacion
 }

@@ -14,6 +14,7 @@ public class HabitacionMapper {
                 .descripcion(habitacionDto.descripcion())
                 .capacidad(habitacionDto.capacidad())
                 .estadoHabitacion(EstadoHabitacion.DISPONIBLE)
+                .activo(true)
                 .build();
     }
     public HabitacionDtoResponse toDto(Habitacion entity){
