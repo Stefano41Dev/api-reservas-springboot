@@ -8,6 +8,7 @@ import com.reservas.web.dto.reserva.detalle.DetalleReservaDtoResponse;
 import com.reservas.web.dto.reserva.detalle.DetalleReservaModificarEstadoDtoRequest;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -31,7 +32,10 @@ public class ReservaController {
         return ResponseEntity.ok(reservaDtoResponse);
     }
     @GetMapping
-    public ResponseEntity<Page<ReservaDtoResponse>> listaReservas(@PageableDefault Pageable pageable){
+    public ResponseEntity<Page<ReservaDtoResponse>> listaReservas(
+            @PageableDefault
+            @ParameterObject
+            Pageable pageable){
         var reservas = reservaService.listaReservas(pageable);
         return ResponseEntity.ok(reservas);
     }

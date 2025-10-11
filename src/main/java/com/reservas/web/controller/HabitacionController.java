@@ -5,6 +5,7 @@ import com.reservas.web.dto.habitacion.HabitacionDtoEstadoHabitacionRequest;
 import com.reservas.web.dto.habitacion.HabitacionDtoRequest;
 import com.reservas.web.dto.habitacion.HabitacionDtoResponse;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -29,7 +30,9 @@ public class HabitacionController {
     }
     @GetMapping
     public ResponseEntity<Page<HabitacionDtoResponse>> obtenerHabitaciones(
-            @PageableDefault Pageable pageable) {
+            @PageableDefault(page = 0,size = 10)
+            @ParameterObject
+            Pageable pageable) {
         var page = habitacionService.obtenerHabitaciones(pageable);
         return ResponseEntity.ok().body(page);
     }
@@ -43,9 +46,11 @@ public class HabitacionController {
         var habitacion = habitacionService.modificarEstadoHabitacion(id, habitacionEstadoDtoRequest);
         return  ResponseEntity.ok().body(habitacion);
     }
-    @GetMapping("/{estadoHabitacion}")
+    @GetMapping("estado/{estadoHabitacion}")
     public ResponseEntity<Page<HabitacionDtoResponse>> obtenerHabitacionesSegunEstado(
-            @PageableDefault Pageable pageable,
+            @PageableDefault
+            @ParameterObject
+            Pageable pageable,
             @PathVariable String estadoHabitacion
     ){
         var habitaciones = habitacionService.obtenerHabitacionesEstadoHabitacion(pageable, estadoHabitacion);

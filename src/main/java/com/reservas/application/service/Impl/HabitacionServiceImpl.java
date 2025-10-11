@@ -68,7 +68,7 @@ public class HabitacionServiceImpl implements HabitacionService {
             EstadoHabitacion estadoHabitacionEnum = EstadoHabitacion.valueOf(estadoHabitacion);
             habitacionesSegunEstado = habitacionRepository.findAllByEstadoHabitacion(estadoHabitacionEnum,pageable);
         }catch(IllegalArgumentException  ex){
-            throw new ErrorNegocio("El estado" + estadoHabitacion + " no es valido", HttpStatus.BAD_REQUEST);
+            throw new ErrorNegocio("El estado " + estadoHabitacion + " no es valido", HttpStatus.BAD_REQUEST);
         }
         return habitacionesSegunEstado.map(habitacionMapper::toDto);
     }
