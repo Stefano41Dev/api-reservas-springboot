@@ -1,8 +1,9 @@
 package com.reservas.web.dto.usuario;
 
-public record UsuarioDtoRequest(
+public record RegisterRequest(
         String nombres,
         String apellidos,
+        String email,
         String dni,
         String password
 ) {
