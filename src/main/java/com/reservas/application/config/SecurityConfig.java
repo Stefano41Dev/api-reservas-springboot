@@ -28,7 +28,11 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/auth/**",
+                                    "/swagger-ui.html",
+                                    "/swagger-ui/**",
+                                    "/v3/api-docs/**").permitAll()
+
                         .requestMatchers("/api/habitacion/**").hasAuthority("ADMINISTRADOR")
                         .requestMatchers("/api/reserva/**").hasAuthority("CLIENTE")
                         .anyRequest().authenticated()

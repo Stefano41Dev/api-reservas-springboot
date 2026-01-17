@@ -1,0 +1,1 @@
+INSERT INTO usuarios (apellidos, dni, email, fecha_registro, nombres, password, role) VALUES ('Gonzales Reyna', '69342393','stefano@gmail.com','2026-01-17','Stefano Alexandro', '$2a$12$sbvklhKcX5.MJvr38yo2.u2U62/i435BXZzm4.ec08el3x9mXiVXa', 'ADMINISTRADOR')

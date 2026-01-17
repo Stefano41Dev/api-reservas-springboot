@@ -1,0 +1,23 @@
+spring:
+  sql:
+    init:
+      mode: always
+  application:
+    name: API-Reservas
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/bd_reservas_hotel?createDatabaseIfNotExist=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+
+  jpa:
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+
+jwt:
+  secret: UnaClaveSecretaLargaYSeguraParaFirmarElTokenQueSoloElServidorConoce1234567890
+  expiration: 900000
+  refrestToken: 86400000
