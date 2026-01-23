@@ -1,0 +1,30 @@
+services:
+  api:
+    build: .
+    container_name: api-reservas-springboot
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/bd_reservas_hotel?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    depends_on:
+      mysql:
+        condition: service_healthy
+  mysql:
+    image: mysql:8.3
+    container_name: mysql_db_reservas_habitacion
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_DATABASE: bd_reservas_hotel
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+volumes:
+  mysql_data:

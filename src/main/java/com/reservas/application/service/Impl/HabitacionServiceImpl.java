@@ -38,7 +38,7 @@ public class HabitacionServiceImpl implements HabitacionService {
     }
     @Override
     public Page<HabitacionDtoResponse> obtenerHabitaciones(Pageable pageable) {
-        Page<Habitacion> habitaciones = habitacionRepository.findAllByActivoTrue(pageable);
+        Page<Habitacion> habitaciones = habitacionRepository.findAllByActivoTrueAndEstadoHabitacion(EstadoHabitacion.DISPONIBLE ,pageable);
         return habitaciones.map(habitacionMapper::toDto);
     }
 

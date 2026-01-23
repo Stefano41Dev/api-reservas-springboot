@@ -10,8 +10,7 @@ import java.util.Optional;
 
 public interface HabitacionRepository extends JpaRepository<Habitacion, Integer> {
 
-    Page<Habitacion> findAllByActivoTrue(Pageable pageable);
-
+    Page<Habitacion> findAllByActivoTrueAndEstadoHabitacion(EstadoHabitacion estadoHabitacion, Pageable pageable);
     Optional<Habitacion> findByIdHabitacionAndActivoTrue(Integer idHabitacion);
 
     Page<Habitacion>findAllByEstadoHabitacion(EstadoHabitacion estadoHabitacion, Pageable pageable);

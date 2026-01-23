@@ -4,6 +4,7 @@ import com.reservas.application.service.Impl.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -32,7 +33,8 @@ public class SecurityConfig {
                                     "/swagger-ui.html",
                                     "/swagger-ui/**",
                                     "/v3/api-docs/**").permitAll()
-
+                        // Este es un endpoint accesible para todos porque pueden mirar las habitaciones disponibles
+                        .requestMatchers(HttpMethod.GET , "/api/habitacion").permitAll()
                         .requestMatchers("/api/habitacion/**").hasAuthority("ADMINISTRADOR")
                         .requestMatchers("/api/reserva/**").hasAuthority("CLIENTE")
                         .anyRequest().authenticated()
