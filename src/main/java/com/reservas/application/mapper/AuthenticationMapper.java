@@ -12,8 +12,6 @@ public class AuthenticationMapper {
     public Usuario toEntity (RegisterRequest registerRequest) {
         return Usuario.builder()
                 .email(registerRequest.email())
-                .nombres(registerRequest.nombres())
-                .apellidos(registerRequest.apellidos())
                 .fechaRegistro(LocalDate.now())
                 .dni(registerRequest.dni())
                 .role(RolesUsuario.CLIENTE)

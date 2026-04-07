@@ -4,13 +4,11 @@ import com.reservas.application.service.AuthenticationService;
 import com.reservas.web.dto.usuario.AuthResponse;
 import com.reservas.web.dto.usuario.LoginRequest;
 import com.reservas.web.dto.usuario.RegisterRequest;
+import com.reservas.web.dto.usuario.VerificacionResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -24,12 +22,18 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request) {
-        return ResponseEntity.ok(authenticationService.register(request));
+    public ResponseEntity<VerificacionResponse> register(@RequestBody RegisterRequest request) {
+        VerificacionResponse verificacionResponse = authenticationService.register(request);
+        return ResponseEntity.ok(verificacionResponse);
     }
 
     @PostMapping("/refresh")
     public ResponseEntity<AuthResponse> refresh(HttpServletRequest request) {
         return ResponseEntity.ok(authenticationService.refreshToken(request));
+    }
+
+    @GetMapping("/verify")
+    public ResponseEntity<AuthResponse> verification(@RequestParam String email, @RequestParam String codigo) {
+        return ResponseEntity.ok(authenticationService.verify(email,codigo));
     }
 }

@@ -1,6 +1,7 @@
-INSERT INTO usuarios (apellidos, dni, email, fecha_registro, nombres, password, role)
+INSERT INTO usuarios (apellido_materno,apellido_paterno, dni, email, fecha_registro, nombres, password, role)
 SELECT
-    'Gonzales Reyna',
+    'Reyna',
+    'Gonzales',
     '69342393',
     'stefano@gmail.com',
     '2026-01-17',

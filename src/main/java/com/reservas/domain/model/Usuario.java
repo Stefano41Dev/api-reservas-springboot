@@ -8,6 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -24,16 +25,23 @@ public class Usuario implements UserDetails {
     @Column(name = "id_usuario")
     private Long idUsuario;
     private String nombres;
-    private String apellidos;
+    private String apellidoMaterno;
+    private String apellidoPaterno;
     private String dni;
+    private Integer codigoVerificacionDni;
     private String email;
     private String password;
     @Column(name = "fecha_registro")
     private LocalDate fechaRegistro;
+    private Boolean activo = false;
+    private String codigoVerificacion;
+    private LocalDateTime codeExpiration;
     @Enumerated(EnumType.STRING)
     private RolesUsuario role;
     @OneToMany(mappedBy = "usuario")
     private List<Reserva> reservas;
+
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

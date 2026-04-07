@@ -6,10 +6,11 @@ spring:
     name: API-Reservas
 
   datasource:
-    url: jdbc:mysql://mysql:3306/bd_reservas_hotel?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+
+    url: jdbc:mysql://localhost:3306/bd_reservas_hotel?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: root
+    password: stefano
 
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
@@ -21,7 +22,22 @@ spring:
       hibernate:
         format_sql: true
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${CORREO_JMAIL}
+    password: ${PASSWD_JMAIL}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
 jwt:
-  secret: UnaClaveSecretaLargaYSeguraParaFirmarElTokenQueSoloElServidorConoce1234567890
+  secret: ${JWT_SECRET}
   expiration: 900000
   refrestToken: 86400000
+
+jsonpe:
+  bearerToken: ${TOKEN_JSONPE}
