@@ -27,8 +27,10 @@ public class Usuario implements UserDetails {
     private String nombres;
     private String apellidoMaterno;
     private String apellidoPaterno;
+    @Column(unique = true)
     private String dni;
     private Integer codigoVerificacionDni;
+    @Column(unique = true)
     private String email;
     private String password;
     @Column(name = "fecha_registro")

@@ -41,6 +41,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final IEmailService emailService;
     @Override
     public VerificacionResponse register(RegisterRequest registerRequest) {
+
+        if(usuarioRepository.existsByDni(registerRequest.dni())){
+            throw new ErrorNegocio("El dni " + registerRequest.dni() + " ya esta registrado", HttpStatus.CONFLICT);
+        }
+        if(usuarioRepository.existsByEmail(registerRequest.email())){
+            throw new ErrorNegocio("El email " + registerRequest.email() + " ya esta registrado", HttpStatus.CONFLICT);
+        }
+
         DniDtoResponse dniDtoResponse;
         try{
             dniDtoResponse = dniClient.consultarDni(
