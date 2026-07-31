@@ -6,7 +6,7 @@ spring:
     name: API-Reservas
 
   datasource:
-    url: jdbc:mysql://mysql:3306/bd_reservas_hotel?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/bd_reservas_hotel?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: root
