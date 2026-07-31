@@ -5,6 +5,7 @@ import com.reservas.web.dto.usuario.AuthResponse;
 import com.reservas.web.dto.usuario.LoginRequest;
 import com.reservas.web.dto.usuario.RegisterRequest;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,7 +25,9 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request) {
+    public ResponseEntity<AuthResponse> register(
+            @Valid @RequestBody RegisterRequest request
+    ) {
         return ResponseEntity.ok(authenticationService.register(request));
     }
 

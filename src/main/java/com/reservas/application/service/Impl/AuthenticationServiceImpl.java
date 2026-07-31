@@ -1,6 +1,7 @@
 package com.reservas.application.service.Impl;
 
 import com.reservas.application.config.security.JwtService;
+import com.reservas.application.exception.ErrorNegocio;
 import com.reservas.application.mapper.AuthenticationMapper;
 import com.reservas.application.service.AuthenticationService;
 import com.reservas.domain.model.Usuario;
@@ -10,6 +11,7 @@ import com.reservas.web.dto.usuario.LoginRequest;
 import com.reservas.web.dto.usuario.RegisterRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,6 +29,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public AuthResponse register(RegisterRequest registerRequest) {
+
+        if(usuarioRepository.existsByEmail(registerRequest.email())){
+            throw new ErrorNegocio("Existe un usuario con el mismo Gmail", HttpStatus.CONFLICT);
+        }
+
+        if(usuarioRepository.existsByDni(registerRequest.dni())){
+            throw new ErrorNegocio("Existe un usuario con el mismo DNI", HttpStatus.CONFLICT);
+        }
 
         Usuario usuario = authenticationMapper.toEntity(registerRequest);
         usuario.setPassword(passwordEncoder.encode(registerRequest.password()));
