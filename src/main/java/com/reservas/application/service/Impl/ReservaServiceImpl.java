@@ -101,6 +101,7 @@ public class ReservaServiceImpl implements ReservaService {
     }
 
     public double agregarDetalleReserva(ReservaDtoRequest reservaDtoRequest, double nuevoMontoTotalReservas, Reserva reservaBuscada) {
+
         for (DetalleReservaDtoRequests detalleDto : reservaDtoRequest.reservaDetalleDtoRequests()) {
             Habitacion habitacion = habitacionRepository.findById(detalleDto.idHabitacion())
                     .orElseThrow(() -> new ErrorNegocio("No se encontro la habitacion con id " + detalleDto.idHabitacion(), HttpStatus.NOT_FOUND));
