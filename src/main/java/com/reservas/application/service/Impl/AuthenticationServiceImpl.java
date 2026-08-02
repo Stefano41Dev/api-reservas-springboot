@@ -52,6 +52,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public AuthResponse login(LoginRequest loginRequest) {
+
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.email(),
@@ -60,7 +61,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         );
 
         Usuario user = usuarioRepository.findByEmail(loginRequest.email())
-                .orElseThrow(() -> new RuntimeException("Error: Usuario no encontrado después de autenticación exitosa."));
+                .orElseThrow(() -> new ErrorNegocio("No se encontro usuario con ese Gmail", HttpStatus.NOT_FOUND));
 
         String jwtToken = jwtService.generateToken(user);
         String refreshToken = jwtService.generateRefreshToken(user);

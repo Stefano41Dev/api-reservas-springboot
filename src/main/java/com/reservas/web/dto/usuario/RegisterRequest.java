@@ -15,7 +15,7 @@ public record RegisterRequest(
         @NotBlank
         @Size(max = 8, min = 8, message = "El DNI debe tener 8 caracteres")
         String dni,
-        @NotBlank
+        @NotBlank(message = "La contraseña no puede estar en blanco")
         String password
 ) {
 }
