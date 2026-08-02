@@ -27,6 +27,7 @@ public class HabitacionServiceImpl implements HabitacionService {
     @Override
     @Transactional
     public HabitacionDtoResponse agregarHabitacion(HabitacionDtoRequest habitacionDto) {
+
         if(habitacionDto.capacidad()<0){
             throw new ErrorNegocio("La capacidad no puede ser 0", HttpStatus.BAD_REQUEST);
         }
@@ -78,6 +79,7 @@ public class HabitacionServiceImpl implements HabitacionService {
 
     @Override
     public Page<HabitacionDtoResponse> obtenerHabitacionesEstadoHabitacion(Pageable pageable, String estadoHabitacion) {
+
         Page<Habitacion> habitacionesSegunEstado;
         try{
             EstadoHabitacion estadoHabitacionEnum = EstadoHabitacion.valueOf(estadoHabitacion);
@@ -85,6 +87,7 @@ public class HabitacionServiceImpl implements HabitacionService {
         }catch(IllegalArgumentException  ex){
             throw new ErrorNegocio("El estado " + estadoHabitacion + " no es valido", HttpStatus.BAD_REQUEST);
         }
+
         return habitacionesSegunEstado.map(habitacionMapper::toDto);
     }
 
