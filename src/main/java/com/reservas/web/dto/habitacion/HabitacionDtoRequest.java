@@ -1,11 +1,17 @@
 package com.reservas.web.dto.habitacion;
 
 import com.reservas.domain.model.Enum.TipoHabitacion;
+import com.reservas.web.dto.habitacion.imagenes.ImagenHabitacionDtoRequest;
 import jakarta.validation.constraints.Positive;
 import lombok.Builder;
 
+import java.util.List;
+
 @Builder
 public record HabitacionDtoRequest(
+
+        String urlImagePrincipal,
+        List<ImagenHabitacionDtoRequest> listaImagenes,
         @Positive(message = "Eliga un numero de habitacion correcto")
         int numeroHabitacion,
         @Positive(message = "Eliga una cantidad de camas")

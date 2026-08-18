@@ -21,6 +21,14 @@ public class Habitacion {
     private Integer idHabitacion;
     @Column(name = "numero_habitacion")
     private int numeroHabitacion;
+    @Column(name = "url_imagenPrincipal")
+    private String urlImagenPrincipal;
+    @OneToMany(
+            mappedBy = "habitacion",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<ImagenHabitacion> imagenes;
     @Column(name = "tarifa_diaria")
     private Double tarifaDiaria;
     private String descripcion;

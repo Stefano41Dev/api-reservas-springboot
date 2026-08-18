@@ -27,7 +27,6 @@ public class HabitacionServiceImpl implements HabitacionService {
     @Override
     @Transactional
     public HabitacionDtoResponse agregarHabitacion(HabitacionDtoRequest habitacionDto) {
-
         if(habitacionDto.capacidad()<0){
             throw new ErrorNegocio("La capacidad no puede ser 0", HttpStatus.BAD_REQUEST);
         }
