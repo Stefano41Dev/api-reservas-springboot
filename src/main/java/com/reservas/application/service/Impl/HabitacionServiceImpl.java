@@ -34,6 +34,9 @@ public class HabitacionServiceImpl implements HabitacionService {
         if(habitacionDto.tarifaDiaria()<20){
             throw new ErrorNegocio("La tarifa no puede ser menor a 20 soles",HttpStatus.BAD_REQUEST);
         }
+        if(habitacionRepository.existsHabitacionByNumeroHabitacion(habitacionDto.numeroHabitacion())){
+           throw new ErrorNegocio("Ya existe una habitacion registrada con este numero de habitacion", HttpStatus.BAD_REQUEST);
+        }
         var habitacion = habitacionRepository.save(habitacionMapper.toEntity(habitacionDto));
         return habitacionMapper.toDto(habitacion);
     }

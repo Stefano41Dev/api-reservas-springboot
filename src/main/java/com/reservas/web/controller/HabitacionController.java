@@ -4,6 +4,7 @@ import com.reservas.application.service.HabitacionService;
 import com.reservas.web.dto.habitacion.HabitacionDtoEstadoHabitacionRequest;
 import com.reservas.web.dto.habitacion.HabitacionDtoRequest;
 import com.reservas.web.dto.habitacion.HabitacionDtoResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
@@ -18,8 +19,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/habitacion")
 public class HabitacionController {
     public final HabitacionService habitacionService;
+
     @PostMapping
-    public ResponseEntity<HabitacionDtoResponse> agregarHabitacion(@RequestBody HabitacionDtoRequest habitacionDtoRequest) {
+    public ResponseEntity<HabitacionDtoResponse> agregarHabitacion(@Valid @RequestBody HabitacionDtoRequest habitacionDtoRequest) {
         HabitacionDtoResponse habitacionDtoResponse= habitacionService.agregarHabitacion(habitacionDtoRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(habitacionDtoResponse);
     }
