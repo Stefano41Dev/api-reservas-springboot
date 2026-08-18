@@ -58,4 +58,9 @@ public class HabitacionController {
         var habitaciones = habitacionService.obtenerHabitacionesEstadoHabitacion(pageable, estadoHabitacion);
         return ResponseEntity.ok().body(habitaciones);
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminarHabitacion(@PathVariable Integer id){
+        habitacionService.eliminarHabitacion(id);
+        return ResponseEntity.noContent().build();
+    }
 }

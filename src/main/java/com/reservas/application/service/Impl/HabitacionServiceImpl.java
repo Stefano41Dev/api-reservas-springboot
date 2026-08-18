@@ -86,7 +86,7 @@ public class HabitacionServiceImpl implements HabitacionService {
         Page<Habitacion> habitacionesSegunEstado;
         try{
             EstadoHabitacion estadoHabitacionEnum = EstadoHabitacion.valueOf(estadoHabitacion);
-            habitacionesSegunEstado = habitacionRepository.findAllByEstadoHabitacion(estadoHabitacionEnum,pageable);
+            habitacionesSegunEstado = habitacionRepository.findAllByEstadoHabitacionAndActivoTrue(estadoHabitacionEnum,pageable);
         }catch(IllegalArgumentException  ex){
             throw new ErrorNegocio("El estado " + estadoHabitacion + " no es valido", HttpStatus.BAD_REQUEST);
         }
@@ -96,7 +96,10 @@ public class HabitacionServiceImpl implements HabitacionService {
 
     @Override
     public void eliminarHabitacion(Integer id) {
-        //Todo:Implementar el metodo para eliminar una habitacion
+        var habitacion = habitacionRepository.findById(id)
+                .orElseThrow(()-> new ErrorNegocio("No se encontro la habitacion con id "+ id, HttpStatus.NOT_FOUND));
+        habitacion.setActivo(false);
+        habitacionRepository.save(habitacion);
     }
 
 }

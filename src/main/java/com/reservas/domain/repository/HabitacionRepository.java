@@ -12,7 +12,7 @@ public interface HabitacionRepository extends JpaRepository<Habitacion, Integer>
 
     Page<Habitacion> findAllByActivoTrueAndEstadoHabitacion(EstadoHabitacion estadoHabitacion, Pageable pageable);
     Optional<Habitacion> findByIdHabitacionAndActivoTrue(Integer idHabitacion);
-    Page<Habitacion>findAllByEstadoHabitacion(EstadoHabitacion estadoHabitacion, Pageable pageable);
+    Page<Habitacion>findAllByEstadoHabitacionAndActivoTrue(EstadoHabitacion estadoHabitacion, Pageable pageable);
     Boolean existsHabitacionByNumeroHabitacion(int numeroHabitacion);
 }
 
