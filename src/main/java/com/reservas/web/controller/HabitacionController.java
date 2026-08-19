@@ -39,12 +39,12 @@ public class HabitacionController {
         return ResponseEntity.ok().body(page);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<HabitacionDtoResponse> modificarHabitacion(@PathVariable Integer id, @RequestBody HabitacionDtoRequest habitacionDtoRequest) {
+    public ResponseEntity<HabitacionDtoResponse> modificarHabitacion(@PathVariable Integer id, @Valid @RequestBody HabitacionDtoRequest habitacionDtoRequest) {
         var habitacion = habitacionService.modificarHabitacion(habitacionDtoRequest, id);
         return ResponseEntity.ok().body(habitacion);
     }
     @PatchMapping("/{id}")
-    public ResponseEntity<HabitacionDtoResponse> modificarEstadoHabitacion(@PathVariable Integer id, @RequestBody HabitacionDtoEstadoHabitacionRequest habitacionEstadoDtoRequest) {
+    public ResponseEntity<HabitacionDtoResponse> modificarEstadoHabitacion(@PathVariable Integer id, @Valid @RequestBody HabitacionDtoEstadoHabitacionRequest habitacionEstadoDtoRequest) {
         var habitacion = habitacionService.modificarEstadoHabitacion(id, habitacionEstadoDtoRequest);
         return  ResponseEntity.ok().body(habitacion);
     }
