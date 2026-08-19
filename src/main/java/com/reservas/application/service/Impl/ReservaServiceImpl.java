@@ -82,7 +82,7 @@ public class ReservaServiceImpl implements ReservaService {
     public DetalleReservaDtoResponse modificarEstadoDetalleReserva(DetalleReservaModificarEstadoDtoRequest reservaDtoRequest, Long idDetalleReserva) {
         DetalleReserva detalleReserva = detalleReservaRepository.findById(idDetalleReserva)
                 .orElseThrow(()-> new ErrorNegocio("No se encontro el detalle de la reserva con id " + idDetalleReserva, HttpStatus.NOT_FOUND));
-        detalleReserva.setEstadoReserva(EstadoReserva.valueOf(reservaDtoRequest.estadoReserva().toUpperCase()));
+        detalleReserva.setEstadoReserva(reservaDtoRequest.estadoReserva());
         detalleReserva = detalleReservaRepository.save(detalleReserva);
         return detalleReservaMapper.toDto(detalleReserva);
     }

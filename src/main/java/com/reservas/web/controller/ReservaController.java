@@ -5,6 +5,7 @@ import com.reservas.web.dto.reserva.ReservaDtoRequest;
 import com.reservas.web.dto.reserva.ReservaDtoResponse;
 import com.reservas.web.dto.reserva.detalle.DetalleReservaDtoResponse;
 import com.reservas.web.dto.reserva.detalle.DetalleReservaModificarEstadoDtoRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 public class ReservaController {
     private final ReservaService reservaService;
     @PostMapping
-    public ResponseEntity<ReservaDtoResponse> agregarReserva(@RequestBody ReservaDtoRequest reservaDtoRequest){
+    public ResponseEntity<ReservaDtoResponse> agregarReserva(@Valid @RequestBody ReservaDtoRequest reservaDtoRequest){
         ReservaDtoResponse reservaDtoResponse = reservaService.agregarReserva(reservaDtoRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(reservaDtoResponse);
     }
@@ -46,7 +47,7 @@ public class ReservaController {
     }
     @PutMapping("/{id}")
     public ResponseEntity<ReservaDtoResponse> modificarDetallesReserva(
-            @RequestBody ReservaDtoRequest reservaDto,
+            @Valid @RequestBody ReservaDtoRequest reservaDto,
             @PathVariable Long id ){
         var reservaModificada = reservaService.modificarReserva(reservaDto,id);
         return ResponseEntity.ok(reservaModificada);

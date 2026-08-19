@@ -1,6 +1,8 @@
 package com.reservas.web.dto.reserva.detalle;
 
+import com.reservas.domain.model.Enum.EstadoReserva;
+
 public record DetalleReservaModificarEstadoDtoRequest(
-        String estadoReserva
+        EstadoReserva estadoReserva
 ) {
 }
