@@ -34,9 +34,9 @@ public class SecurityConfig {
                                     "/swagger-ui/**",
                                     "/v3/api-docs/**").permitAll()
                         // Este es un endpoint accesible para todos porque pueden mirar las habitaciones disponibles
-                        .requestMatchers(HttpMethod.GET , "/api/habitacion").permitAll()
-                        .requestMatchers("/api/habitacion/**").hasAuthority("ADMINISTRADOR")
-                        .requestMatchers("/api/reserva/**").hasAuthority("CLIENTE")
+                        .requestMatchers(HttpMethod.GET , "/habitacion").permitAll()
+                        .requestMatchers("/habitacion/**").hasAuthority("ADMINISTRADOR")
+                        .requestMatchers("/reserva/**").hasAuthority("CLIENTE")
                         .anyRequest().authenticated()
                 )
                 // Política de sesión STATELESS: No usa sesiones HTTP (JWT es sin estado)
