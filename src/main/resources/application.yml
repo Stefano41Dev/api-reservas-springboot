@@ -6,13 +6,11 @@ spring:
     name: API-Reservas
 
   datasource:
-    url: jdbc:mysql://localhost:3306/bd_reservas_hotel?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: root
+    url: ${SUPABASE_URL}
+    driver-class-name: org.postgresql.Driver
 
   jpa:
-    database-platform: org.hibernate.dialect.MySQLDialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     defer-datasource-initialization: true
     hibernate:
       ddl-auto: update

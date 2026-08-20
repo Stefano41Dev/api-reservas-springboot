@@ -8,6 +8,8 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ImagenHabitacion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
