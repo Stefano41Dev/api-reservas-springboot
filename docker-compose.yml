@@ -5,26 +5,29 @@ services:
     ports:
       - "8080:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/bd_reservas_hotel?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/bd_reservas_hotel
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
     depends_on:
-      mysql:
+      postgres:
         condition: service_healthy
-  mysql:
-    image: mysql:8.3
-    container_name: mysql_db_reservas_habitacion
+
+  postgres:
+    image: postgres:17
+    container_name: postgres_db_reservas_habitacion
     ports:
-      - "3307:3306"
+      - "5433:5432"
     environment:
-      MYSQL_DATABASE: bd_reservas_hotel
-      MYSQL_ROOT_PASSWORD: root
+      POSTGRES_DB: bd_reservas_hotel
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
     volumes:
-      - mysql_data:/var/lib/mysql
+      - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d bd_reservas_hotel"]
       interval: 10s
       timeout: 5s
       retries: 5
+
 volumes:
-  mysql_data:
+  postgres_data:
