@@ -59,8 +59,7 @@ Esto levanta la API en el puerto `8080` y una base de datos PostgreSQL en el pue
 | Variable | Descripción |
 |---|---|
 | `SUPABASE_URL` | URL de conexión JDBC a la base de datos |
-| `SPRING_DATASOURCE_USERNAME` | Usuario de la base de datos |
-| `SPRING_DATASOURCE_PASSWORD` | Contraseña de la base de datos |
+
 
 La documentación interactiva (Swagger UI) queda disponible en `/swagger-ui.html`.
 
@@ -80,20 +79,19 @@ La API usa JSON Web Tokens. Tras el login o registro se recibe un `token` (acces
 Authorization: Bearer <token>
 ```
 
-Roles disponibles (`RolesUsuario`): `ADMINISTRADOR`, `SUPERVISOR`, `CLIENTE`.
+Roles disponibles (`RolesUsuario`): `ADMINISTRADOR`, `CLIENTE`.
 
 Reglas de acceso configuradas:
 
 | Ruta | Acceso |
 |---|---|
 | `/auth/**` | Público |
-| `/swagger-ui/**`, `/swagger-ui.html`, `/v3/api-docs/**` | Público |
+| `/swagger-ui.html` | Público |
 | `GET /habitacion` | Público |
 | `/habitacion/**` (resto de métodos) | Requiere rol `ADMINISTRADOR` |
 | `/reserva/**` | Requiere rol `CLIENTE` |
 | Cualquier otra ruta | Requiere autenticación |
 
-> **Nota:** la regla de seguridad está definida sobre `/reserva/**`, mientras que el controlador de reservas expone sus rutas bajo `/api/reserva`. Conviene revisar que ambos coincidan para que la restricción de rol `CLIENTE` se aplique correctamente.
 
 ## Manejo de errores
 
@@ -254,41 +252,3 @@ Reglas de negocio destacadas en `ReservaServiceImpl`:
   ]
 }
 ```
-
-## Modelos de datos (DTOs)
-
-### Auth
-
-| DTO | Campos | Validaciones |
-|---|---|---|
-| `LoginRequest` | `email`, `password` | ambos `@NotBlank` |
-| `RegisterRequest` | `nombres`, `apellidos`, `email`, `dni`, `password` | `@NotBlank` en todos, `@Email` en `email`, `dni` con `@Size(min=8, max=8)` |
-| `AuthResponse` | `token`, `refreshToken` | — |
-
-### Habitación
-
-| DTO | Campos | Validaciones |
-|---|---|---|
-| `HabitacionDtoRequest` | `urlImagePrincipal`, `listaImagenes`, `numeroHabitacion`, `cantidadCamas`, `numeroPiso`, `tipoHabitacion`, `tarifaDiaria`, `descripcion`, `capacidad` | `numeroHabitacion`, `cantidadCamas`, `numeroPiso`, `tarifaDiaria`, `capacidad` deben ser `@Positive` |
-| `HabitacionDtoResponse` | `idHabitacion`, `numeroHabitacion`, `cantidadCamas`, `numeroPiso`, `tipoHabitacion`, `urlImagePrincipal`, `listaImagenes`, `tarifaDiaria`, `descripcion`, `capacidad`, `estadoHabitacion` | — |
-| `HabitacionDtoEstadoHabitacionRequest` | `estadoHabitacion` | `@NotBlank` |
-| `ImagenHabitacionDtoRequest` / `ImagenHabitacionDtoResponse` | `url` | — |
-
-### Reserva
-
-| DTO | Campos | Validaciones |
-|---|---|---|
-| `ReservaDtoRequest` | `idUsuario`, `reservaDetalleDtoRequests` | `idUsuario` con `@Positive` |
-| `ReservaDtoResponse` | `idReserva`, `idUsuario`, `montoTotalReservas`, `detallesReserva` | — |
-| `DetalleReservaDtoRequests` | `idHabitacion`, `fechaInicio`, `fechaFin` | `fechaInicio` y `fechaFin` con `@NotNull`, formato `yyyy-MM-dd` |
-| `DetalleReservaDtoResponse` | `idDetalleReserva`, `idReserva`, `idHabitacion`, `dias`, `fechaInicio`, `fechaFin`, `montoTotalHabitacion`, `estadoReserva` | — |
-| `DetalleReservaModificarEstadoDtoRequest` | `estadoReserva` | — |
-
-## Enumeraciones
-
-| Enum | Valores |
-|---|---|
-| `TipoHabitacion` | `SUITE`, `DOBLE`, `MATRIMONIAL`, `SIMPLE` |
-| `EstadoHabitacion` | `DISPONIBLE`, `OCUPADA`, `EN_MANTENIMIENTO` |
-| `EstadoReserva` | `PENDIENTE`, `CONFIRMADA`, `CANCELADA`, `COMPLETADA`, `EN_CURSO`, `LIBRE` |
-| `RolesUsuario` | `ADMINISTRADOR`, `SUPERVISOR`, `CLIENTE` |
